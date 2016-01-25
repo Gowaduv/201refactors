@@ -1,6 +1,9 @@
 table, td {
   border: 1px solid black;
 }
+table{
+  margin-bottom: 1em;
+}
 td, th {
   width: 3em;
   text-align: center;
@@ -14,6 +17,9 @@ td:first-child, th:first-child{
 fieldset, form{
   width: 30em;
   padding: 0.5em 0 0.5em 0.5em;
+}
+fieldset{
+  margin-top: 1em;
 }
 input{
   width: 10em;
