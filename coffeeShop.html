@@ -16,30 +16,36 @@
     <p>The project context states that a small business owner wants to expand and wants each store to update their data so the owner can better plan central purchasing. Each store needs to report their minimum number of customers, the maximum number of customers
       and the average hourly purchases. The owner wants the script to return how many pounds of coffee are required for each store every day.</p>
       <p>Table cells are editable by clicking on them.</p>
-    <table id="tableJS" class="bigBorder"></table>
-    <table id="tablejQ"></table>
 
-    <fieldset>
-      <form id="addStore">
-        <div class="sixteenth">
-          <label for="newLocationName">New Location Name: </label>
-          <input type="text" name="newLocationName"></input>
-        </div>
-        <div class="sixteenth">
-          <label for="fewestCust">Fewest Customers Per Hour: </label>
-          <input type="text" name="fewestCust"></input>
-        </div>
-        <div class="sixteenth">
-          <label for="mostCust">Most Customers Per Hour: </label>
-          <input type="text" name="mostCust"></input>
-        </div>
-        <div class="sixteenth">
-          <label for="avgPurch">  Average Purchase Per Customer: </label>
-          <input type="text" name="avgPurch"></input>
-        </div>
-      <button type="submit">Add Store</button>
-      </form>
-    </fieldset>
+      <fieldset>
+        <form id="addStore">
+          <div class="sixteenth">
+            <label for="newLocationName">New Location Name: </label>
+            <input type="text" name="newLocationName"></input>
+          </div>
+          <div class="sixteenth">
+            <label for="fewestCust">Fewest Customers Per Hour: </label>
+            <input type="text" name="fewestCust"></input>
+          </div>
+          <div class="sixteenth">
+            <label for="mostCust">Most Customers Per Hour: </label>
+            <input type="text" name="mostCust"></input>
+          </div>
+          <div class="sixteenth">
+            <label for="avgPurch">  Average Purchase Per Customer: </label>
+            <input type="text" name="avgPurch"></input>
+          </div>
+        <button type="submit">Add Store</button>
+        </form>
+      </fieldset>
+
+    <fieldset><table id="tableJS" class="bigBorder"><legend>
+      Average Hourly Purchases by Location:
+    </legend></table></fieldset>
+    <fieldset><table id="tableJQ" class="bigBorder"><legend>
+      Average Hourly Purchases by Location:
+    </legend></table></fieldset>
+
 
 
   </div>
