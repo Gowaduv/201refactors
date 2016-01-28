@@ -45,18 +45,15 @@ function renderFirstRow() {
 Store.prototype.render = function() {
   this.hourlyLbsGen();
   this.totalLbs();
-  getLocally();
   var table = document.getElementById("tableJS");
   var trEl2 = document.createElement("tr");
   trEl2.setAttribute('onclick', "deleteRow(this)");
   var tdEl = document.createElement("td");
-  // tdEl.setAttribute("contentEditable", "true");
   tdEl.textContent = this.storeName;
   trEl2.appendChild(tdEl);
   table.appendChild(trEl2);
   for (var i = 0; i <= this.hourlyCustomers.length; i++) {
     var tdEl = document.createElement("td");
-    // tdEl.setAttribute("contentEditable", "true");
     tdEl.textContent = this.hourlyLbs[i];
     trEl2.appendChild(tdEl);
   }
@@ -67,13 +64,15 @@ Store.prototype.render = function() {
   trEl2.appendChild(makeButton);
   table.appendChild(trEl2);
 }
-
+var pikePlace = new Store("Pike Place", 30, 110, 0.75);
+storeLocally();
+delayGetLocally();
+//need to remove deleted row from storage
 function deleteRow(btn) {
   var row = btn;
   document.getElementById("tableJS").deleteRow(row.rowIndex);
   storeLocally();
 }
-var pikePlace = new Store("Pike Place", 30, 110, 0.75);
 
 function submitData(event) {
   event.preventDefault();
@@ -86,20 +85,28 @@ function submitData(event) {
     var avgSales = parseInt(event.target.avgPurch.value);
     var newStore = new Store(newLocation, minCust, maxCust, avgSales);
     storeData.push(newStore);
-    storeLocally();
     event.target.newLocationName.value = null;
     event.target.fewestCust.value = null;
     event.target.mostCust.value = null;
     event.target.avgPurch.value = null;
+    storeLocally();
   }
 }
 document.getElementById("addStore").addEventListener("submit", submitData, false);
-
-function storeLocally(){
-  var jsonData = JSON.stringify(storeData);
-  localStorage.setItem("lsData", jsonData);
-}
+//why is data for new store being added twice?
 function getLocally(){
-  var getLocalStorageData = localStorage.getItem(lsData);
+  var getLocalStorageData = localStorage.getItem("lsData");
   var parseData = JSON.parse(getLocalStorageData);
+  console.log(parseData);
+  return parseData;
+}
+function delayGetLocally() {
+  console.log("delaying the getting of locally");
+  var timeOutId = window.setTimeout(getLocally, 1000);
+}
+function storeLocally(){
+  console.log("storing locally");
+  var jsonData = JSON.stringify(storeData);
+  console.log("jsonData is: " + jsonData);
+  localStorage.setItem("lsData", jsonData);
 }
