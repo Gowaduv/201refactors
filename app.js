@@ -51,7 +51,7 @@ Store.prototype.render = function() {
   // console.log(parseData.length);
   // console.log(parseData[0].storeName);
   // console.log(parseData[0].hourlyLbs);
-  if (getLocalStorageData !== "[]") {
+  if (getLocalStorageData) {
     for (var i = 0; i < parseData.length; i++) {
       var table = document.getElementById("tableJS");
       var trEl2 = document.createElement("tr");
