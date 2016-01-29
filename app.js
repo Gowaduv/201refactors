@@ -11,9 +11,9 @@ function Store(storeName, minCust, maxCust, lbsSold) {
   this.lbsReq = 0;
   this.render();
   storeData.push(this);
+  storeLocally();
 };
 renderFirstRow();
-
 Store.prototype.hourlyLbsGen = function() {
   for (var i = 0; i < storeHours.length; i++) {
     this.hourlyCustomers.push(Math.floor(Math.random() * (this.maxCust - this.minCust) + this.minCust));
@@ -65,13 +65,15 @@ Store.prototype.render = function() {
   table.appendChild(trEl2);
 }
 var pikePlace = new Store("Pike Place", 30, 110, 0.75);
-storeLocally();
-delayGetLocally();
+// delayGetLocally();
 //need to remove deleted row from storage
 function deleteRow(btn) {
   var row = btn;
+  var indexToDelete = row.rowIndex - 1;
+
+  console.log("indexToDelete value: " + indexToDelete);
   document.getElementById("tableJS").deleteRow(row.rowIndex);
-  storeLocally();
+  storeData.splice(indexToDelete, 1); //remove object from storeData
 }
 
 function submitData(event) {
@@ -84,29 +86,25 @@ function submitData(event) {
     var maxCust = parseInt(event.target.mostCust.value);
     var avgSales = parseInt(event.target.avgPurch.value);
     var newStore = new Store(newLocation, minCust, maxCust, avgSales);
-    storeData.push(newStore);
     event.target.newLocationName.value = null;
     event.target.fewestCust.value = null;
     event.target.mostCust.value = null;
     event.target.avgPurch.value = null;
-    storeLocally();
   }
 }
 document.getElementById("addStore").addEventListener("submit", submitData, false);
 //why is data for new store being added twice?
-function getLocally(){
-  var getLocalStorageData = localStorage.getItem("lsData");
-  var parseData = JSON.parse(getLocalStorageData);
-  console.log(parseData);
-  return parseData;
-}
-function delayGetLocally() {
-  console.log("delaying the getting of locally");
-  var timeOutId = window.setTimeout(getLocally, 1000);
-}
-function storeLocally(){
-  console.log("storing locally");
+function storeLocally() {
   var jsonData = JSON.stringify(storeData);
-  console.log("jsonData is: " + jsonData);
   localStorage.setItem("lsData", jsonData);
 }
+// function getLocally(){
+//   var getLocalStorageData = localStorage.getItem("lsData");
+//   var parseData = JSON.parse(getLocalStorageData);
+//   console.log("parseData is" + parseData);
+//   return parseData;
+// }
+// function delayGetLocally() {
+//   console.log("delaying the getting of locally");
+//   var timeOutId = window.setTimeout(getLocally, 1000);
+// }
