@@ -11,9 +11,8 @@ function Store(storeName, minCust, maxCust, lbsSold) {
   this.lbsReq = 0;
   this.render();
   storeData.push(this);
-  storeLocally();
+  console.log("I'm pushing my data in the Constructor");
 };
-renderFirstRow();
 Store.prototype.hourlyLbsGen = function() {
   for (var i = 0; i < storeHours.length; i++) {
     this.hourlyCustomers.push(Math.floor(Math.random() * (this.maxCust - this.minCust) + this.minCust));
@@ -25,6 +24,7 @@ Store.prototype.hourlyLbsGen = function() {
     }
   }
 }
+renderFirstRow();
 
 function renderFirstRow() {
   var table = document.getElementById("tableJS");
@@ -45,35 +45,61 @@ function renderFirstRow() {
 Store.prototype.render = function() {
   this.hourlyLbsGen();
   this.totalLbs();
-  var table = document.getElementById("tableJS");
-  var trEl2 = document.createElement("tr");
-  trEl2.setAttribute('onclick', "deleteRow(this)");
-  var tdEl = document.createElement("td");
-  tdEl.textContent = this.storeName;
-  trEl2.appendChild(tdEl);
-  table.appendChild(trEl2);
-  for (var i = 0; i <= this.hourlyCustomers.length; i++) {
+  var getLocalStorageData = localStorage.getItem("lsData");
+  var parseData = JSON.parse(getLocalStorageData);
+  console.table(parseData);
+  // console.log(parseData.length);
+  // console.log(parseData[0].storeName);
+  // console.log(parseData[0].hourlyLbs);
+  if (getLocalStorageData !== "[]") {
+    for (var i = 0; i < parseData.length; i++) {
+      var table = document.getElementById("tableJS");
+      var trEl2 = document.createElement("tr");
+      trEl2.setAttribute('onclick', "deleteRow(this)");
+      var tdEl = document.createElement("td");
+      tdEl.textContent = parseData[i].storeName;
+      trEl2.appendChild(tdEl);
+      table.appendChild(trEl2);
+      for (var j = 0; j <= parseData[i].hourlyCustomers.length; j++) {
+        var tdEl = document.createElement("td");
+        tdEl.textContent = parseData[i].hourlyLbs[j];
+        trEl2.appendChild(tdEl);
+      }
+      tdEl.textContent = parseData[i].lbsReq;
+      trEl2.appendChild(tdEl);
+      var makeButton = document.createElement("button");
+      makeButton.textContent = "DELETE";
+      trEl2.appendChild(makeButton);
+      table.appendChild(trEl2);
+    }
+  } else {
+    var table = document.getElementById("tableJS");
+    var trEl2 = document.createElement("tr");
+    trEl2.setAttribute('onclick', "deleteRow(this)");
     var tdEl = document.createElement("td");
-    tdEl.textContent = this.hourlyLbs[i];
+    tdEl.textContent = this.storeName;
     trEl2.appendChild(tdEl);
+    table.appendChild(trEl2);
+    for (var j = 0; j <= this.hourlyCustomers.length; j++) {
+      var tdEl = document.createElement("td");
+      tdEl.textContent = this.hourlyLbs[j];
+      trEl2.appendChild(tdEl);
+    }
+    tdEl.textContent = this.lbsReq;
+    trEl2.appendChild(tdEl);
+    var makeButton = document.createElement("button");
+    makeButton.textContent = "DELETE";
+    trEl2.appendChild(makeButton);
+    table.appendChild(trEl2);
   }
-  tdEl.textContent = this.lbsReq;
-  trEl2.appendChild(tdEl);
-  var makeButton = document.createElement("button");
-  makeButton.textContent = "DELETE";
-  trEl2.appendChild(makeButton);
-  table.appendChild(trEl2);
 }
-var pikePlace = new Store("Pike Place", 30, 110, 0.75);
-// delayGetLocally();
-//need to remove deleted row from storage
+var Sample = new Store("Sample Store", 30, 110, 0.75);
 function deleteRow(btn) {
   var row = btn;
   var indexToDelete = row.rowIndex - 1;
-
-  console.log("indexToDelete value: " + indexToDelete);
   document.getElementById("tableJS").deleteRow(row.rowIndex);
   storeData.splice(indexToDelete, 1); //remove object from storeData
+  storeLocally();
 }
 
 function submitData(event) {
@@ -82,29 +108,32 @@ function submitData(event) {
     return alert("All fields must be completed.");
   } else {
     var newLocation = event.target.newLocationName.value;
-    var minCust = parseInt(event.target.fewestCust.value);
-    var maxCust = parseInt(event.target.mostCust.value);
-    var avgSales = parseInt(event.target.avgPurch.value);
+    var minCust = parseFloat(event.target.fewestCust.value);
+    var maxCust = parseFloat(event.target.mostCust.value);
+    var avgSales = parseFloat(event.target.avgPurch.value);
     var newStore = new Store(newLocation, minCust, maxCust, avgSales);
     event.target.newLocationName.value = null;
     event.target.fewestCust.value = null;
     event.target.mostCust.value = null;
     event.target.avgPurch.value = null;
+    storeLocally();
   }
 }
+
 document.getElementById("addStore").addEventListener("submit", submitData, false);
-//why is data for new store being added twice?
+
 function storeLocally() {
+  console.log("I'm storing locally now!");
+  console.log("storeData is... ");
+  console.table(storeData);
   var jsonData = JSON.stringify(storeData);
   localStorage.setItem("lsData", jsonData);
+  console.log(localStorage.lsData);
 }
-// function getLocally(){
-//   var getLocalStorageData = localStorage.getItem("lsData");
-//   var parseData = JSON.parse(getLocalStorageData);
-//   console.log("parseData is" + parseData);
-//   return parseData;
-// }
-// function delayGetLocally() {
-//   console.log("delaying the getting of locally");
-//   var timeOutId = window.setTimeout(getLocally, 1000);
-// }
+
+function clearLocal() {
+  var verifyClearLS = confirm("Are you really sure?");
+  if (verifyClearLS === true) {
+    localStorage.clear()
+  }
+}
