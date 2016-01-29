@@ -134,6 +134,7 @@ function storeLocally() {
 function clearLocal() {
   var verifyClearLS = confirm("Are you really sure?");
   if (verifyClearLS === true) {
-    localStorage.clear()
+    localStorage.clear();
+    document.location.reload();
   }
 }
