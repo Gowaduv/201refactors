@@ -12,34 +12,40 @@
 <body>
   <div class="wrapper60">
     <p>This page replicates a project for the Code Fellows 201 class that I TAd for two months. The top form adds a row to the table dynamically via JS. The second table adds a row to the table dynamically via jQuery, and sends that data as JSON to a firebase
-      database file.</p>
+      database file. Both tables render the data entered from the form.</p>
     <p>The project context states that a small business owner wants to expand and wants each store to update their data so the owner can better plan central purchasing. Each store needs to report their minimum number of customers, the maximum number of customers
       and the average hourly purchases. The owner wants the script to return how many pounds of coffee are required for each store every day.</p>
-    <p>The upper table is generated in vanilla JavaScript. The lower is in jQuery. Both tables render the data entered from the form.</p>
-    <table id="tableJS" class="bigBorder"></table>
-    <table id="tablejQ"></table>
+      <p>The "delete" button removes the respective row from the table, then deletes that data from the data storage.</p>
 
-    <fieldset>
-      <form id="addStore">
-        <div class="sixteenth">
-          <label for="newLocationName">New Location Name: </label>
-          <input type="text" name="newLocationName"></input>
-        </div>
-        <div class="sixteenth">
-          <label for="fewestCust"> Fewest Customers Per Hour: </label>
-          <input type="text" name="fewestCust"></input>
-        </div>
-        <div class="sixteenth">
-          <label for="mostCust"> Most Customers Per Hour: </label>
-          <input type="text" name="mostCust"></input>
-        </div>
-        <div class="sixteenth">
-          <label for="avgPurch"> Average Purchase Per Customer: </label>
-          <input type="text" name="avgPurch"></input>
-        </div>
-      <button type="submit" >Add Store</button>
-      </form>
-    </fieldset>
+      <fieldset>
+        <form id="addStore">
+          <div class="sixteenth">
+            <label for="newLocationName">New Location Name: </label>
+            <input type="text" name="newLocationName"></input>
+          </div>
+          <div class="sixteenth">
+            <label for="fewestCust">Fewest Customers Per Hour: </label>
+            <input type="text" name="fewestCust"></input>
+          </div>
+          <div class="sixteenth">
+            <label for="mostCust">Most Customers Per Hour: </label>
+            <input type="text" name="mostCust"></input>
+          </div>
+          <div class="sixteenth">
+            <label for="avgPurch">  Average Purchase Per Customer: </label>
+            <input type="text" name="avgPurch"></input>
+          </div>
+        <button type="submit">Add Store</button>
+        </form>
+      </fieldset>
+
+    <fieldset><table id="tableJS" class="bigBorder"><legend>
+      Average Hourly Purchases by Location:
+    </legend></table></fieldset>
+    <fieldset><table id="tableJQ" class="bigBorder"><legend>
+      Average Hourly Purchases by Location:
+    </legend></table></fieldset>
+
 
 
   </div>

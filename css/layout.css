@@ -1,20 +1,32 @@
 table, td {
   border: 1px solid black;
 }
+th {
+  border: 2px solid black;
+}
+table {
+  margin-bottom: 1em;
+}
 td, th {
   width: 3em;
   text-align: center;
 }
-td:first-child, th:first-child{
-  width: 6em;
+td:first-child, th:first-child {
+  min-width: 5em;
 }
-.bigBorder{
+tr:nth-child(2) button {
+  display: none;
+}
+.bigBorder {
   margin: 2em 0;
 }
-fieldset, form{
+fieldset, form {
   width: 30em;
-  padding: 0.5em 0 0.5em 0.5em;
+  padding: 0.5em;
 }
-input{
+fieldset {
+  margin-top: 1em;
+}
+input {
   width: 10em;
 }
