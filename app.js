@@ -1,4 +1,5 @@
 var storeData = [];
+var storeDataFromLS = {};
 var storeHours = ["5AM", "6AM", "7AM", "8AM", "9AM", "10AM", "11AM", "Noon", "1PM", "2PM", "3PM", "4PM", "5PM", "6PM", "7PM", "8PM"];
 
 function Store(storeName, minCust, maxCust, lbsSold) {
@@ -47,6 +48,7 @@ Store.prototype.render = function() {
   this.totalLbs();
   var getLocalStorageData = localStorage.getItem("lsData");
   var parseData = JSON.parse(getLocalStorageData);
+  storeDataFromLS += parseData;
   console.table(parseData);
   // console.log(parseData.length);
   // console.log(parseData[0].storeName);
